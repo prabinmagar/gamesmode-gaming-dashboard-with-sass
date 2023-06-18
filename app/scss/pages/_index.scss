@@ -1,0 +1,498 @@
+.page-wrapper{
+    @include bg-color(primary);
+    min-height: 100vh;
+}
+
+.sidenav-menu{
+    padding: 60px 12px;
+    @include flex-column;
+    align-items: flex-start;
+    @include pos-fixed(0, null, 0, null, $z-high);
+    @include box(252px, 100%);
+    @include bg-color(primary);
+    @include transition-default;
+
+    &::after{
+        content: "";
+        @include pos-absolute(24px, 0, 24px, null, $z-high);
+        @include box(1px, auto);
+        @include bg-color($color-border);
+    }
+
+    .sidenav-brand{
+        @include flex-center-vert;
+
+        &-icon{
+            width: 32px;
+            margin-right: 8px;
+        }
+
+        &-name{
+            background: -webkit-linear-gradient(90deg, rgba(0, 97, 253, 0.8) 0%, #BCD6FF 89.5%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            @include font-weight('black');
+            @include font-size(20);
+        }
+    }
+
+    .menu-list{
+        width: 100%;
+        margin-top: 55px;
+
+        @include breakpoint-down(lg){
+            margin-top: 40px;
+        }
+
+        @include breakpoint-down(sm){
+            margin-top: 20px;
+        }
+
+        .menu-item{
+            @include flex-center-vert;
+            @include box(100%, 48px);
+            padding-left: 36px;
+            margin-bottom: 16px;
+
+            @include breakpoint-down(sm){
+                margin-bottom: 12px;
+            }
+
+            &:last-child{
+                @include flush--bottom;
+            }
+
+            &-icon{
+                display: inline-block;
+                width: 24px;
+                margin-right: 12px;
+            }
+
+            &-text{
+                color: $color-link-default;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+
+            &-active, &:hover{
+                @include bg-color('primary-light');
+                @include border-radius(12px);
+
+                .menu-item-text{
+                    color: map-get($colors, white);
+                }
+
+                .menu-item-icon{
+                    filter: brightness(0) invert(1);
+                }
+            }
+        }
+    }
+
+    .menu-list-2{
+        @extend .menu-list;
+
+        .user-item{
+            @include flex-center-vert;
+            @include box(100%, 48px);
+            padding-left: 36px;
+
+            &-img{
+                @include box(24px);
+                @include border-radius(100%);
+                margin-right: 12px;
+                @include pos-relative();
+
+                img{
+                    @include border-radius(100%);
+                }
+
+                &::after{
+                    content: "";
+                    @include pos-absolute(null, 0, 0, null);
+                    @include box(6px);
+                    @include bg-color(malachite);
+                    @include border-radius(100%);
+                }
+            }
+
+            &-name{
+                @extend .menu-item-text;
+            }
+
+            &-active, &:hover{
+                @include bg-color(primary-light);
+                @include border-radius(12px);
+
+                .user-item-name{
+                    color: map-get($colors, white);
+                }
+            }
+        }
+    }
+
+    // sidenav hidden state
+    &.sidenav-menu-hide{
+        transform: translateX(-100%);
+    }
+
+    @include breakpoint-down(lg){
+        width: 80px;
+
+        .sidenav-brand{
+            &-name{
+                @include hidden;
+            }
+
+            &-icon{
+                @include flush--right;
+            }
+        }
+
+        .menu-list{
+            .menu-item{
+                @include hard--sides;
+                @include flex-center;
+
+                &-text{
+                    @include hidden;
+                }
+
+                &-icon{
+                    @include flush--right;
+                }
+            }
+        }
+
+        .menu-list-2{
+            .user-item{
+                @include hard--sides;
+                @include flex-center;
+
+                &-img{
+                    @include flush--right;
+                }
+            }
+        }
+    }
+
+    @include breakpoint-down(sm){
+        padding: 32px 12px;
+    }
+}
+
+
+.main-content{
+    margin-left: 252px;
+    padding: 60px 48px 60px 24px;
+    @include transition-default;
+
+    @include breakpoint-down(lg){
+        margin-left: 80px;
+        padding: 60px 24px;
+    }
+
+    @include breakpoint-down(sm){
+        padding: 32px 16px;
+    }
+    
+    &.flush-main-content{
+        @include flush--left;
+    }
+
+    .main-topbar{
+        margin-bottom: 36px;
+        @include flex-center-vert;
+        justify-content: space-between;
+
+        @include breakpoint-down(md){
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    .topbar-left{
+        @include flex-center-vert;
+
+        .sidenav-toggle-btn{
+            width: 24px;
+            margin-right: 24px;
+            cursor: pointer;
+            @include transition-default;
+
+            &:hover{
+                transform: scale(1.1);
+            }
+        }
+
+        .topbar-tab-btns{
+            @include flex-center-vert;
+        }
+
+        .topbar-tab-btn{
+            height: 32px;
+            min-width: 78px;
+            padding: 12px;
+            margin-right: 12px;
+            cursor: pointer;
+            @include flex-center;
+            @include border-radius(100vh);
+            @include transition-default;
+
+            &:last-child{
+                @include flush--right;
+            }
+
+            &-active{
+                color: map-get($colors, white);
+                @include bg-color(secondary);
+                @include font-weight(semibold);
+            }
+
+            &:hover{
+                @extend .topbar-tab-btn-active;
+            }
+        }
+    }
+
+    .topbar-right{
+        @include flex-center-vert;
+        @include breakpoint-down(md){
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .notification-btn{
+            margin-right: 32px;
+            cursor: pointer;
+
+            @include breakpoint-down(lg){
+                margin-right: 20px;
+            }
+        }
+
+        .search-icon{
+            display: inline-block;
+            width: 16px;
+        }
+
+        .search-group{
+            @include grid-center-vert;
+            grid-template-columns: 16px auto;
+            column-gap: 8px;
+            width: 318px;
+            padding: 10px;
+            @include bg-color('primary-light');
+            @include border-radius(24px);
+
+            @include breakpoint-down(lg){
+                width: 240px;
+            }
+
+            @include breakpoint-down(md){
+                width: 100%;
+            }
+        }
+
+        .search-input{
+            background-color: transparent;
+            border: none;
+            outline: 0;
+            color: $color-text;
+            
+            &::placeholder{
+                color: map-get($colors, magnolia-light);
+                letter-spacing: $tracking-base;
+                @include font-weight(semibold);
+                @include text-sm;
+            }
+        }
+    }
+
+    .main-showcase{
+        display: grid;
+        column-gap: 6px;
+        overflow: hidden;
+        grid-template-columns: auto 200px;
+        @include border-radius(null, 12px, 12px, null);
+
+        @include breakpoint-down(lg){
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    .showcase-large{
+        @include pos-relative;
+
+        .showcase-title{
+            @include font-weight(bold);
+            @include pos-absolute(18px, null, null, 28px);
+            text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .showcase-content{
+            @include pos-absolute(null, 0, 0, 0, 15);
+            padding: 32px 28px;
+
+            &-heading{
+                text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+                max-width: 480px;
+                @include font-weight(bold);
+            }
+
+            &-btn{
+                @include inline-flex-center;
+                min-width: 165px;
+                height: 52px;
+                padding: 12px;
+                margin-top: 24px;
+                @include border-radius(8px);
+                
+                img{
+                    width: 24px;
+                }
+            }
+
+            @include breakpoint-down(lg){
+                padding: 24px 20px;
+            }
+        }
+
+        &::after{
+            @include pos-absolute(null, 0, 0, 0);
+            content: "";
+            height: 315px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 20.31%, rgba(0, 0, 0, 0.8) 99.48%);
+        }
+    }
+
+    .showcase-large{
+        height: 448px;
+    }
+
+    .showcase-items{
+        display: grid;
+        height: 448px;
+        overflow-y: scroll;
+        @include scrollbars(5px, map-get($colors, secondary));
+
+        @include breakpoint-down(lg){
+            height: auto;
+            padding: 8px;
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        @include breakpoint-down(md){
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @include breakpoint-down(sm){
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include breakpoint-down(xs){
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .showcase-item{
+        padding: 8px 12px;
+        display: grid;
+        align-items: stretch;
+        grid-template-columns: 48px auto;
+        @include border($color-border, 1px, bottom);
+        column-gap: 12px;
+
+        &-title{
+            align-self: center;
+            @include breakpoint-down(lg){
+                margin-top: 10px;
+            }
+        }
+
+        &-img{
+            @include breakpoint-down(lg){
+                height: 100px;
+            }
+
+            @include breakpoint-down(sm){
+                height: auto;
+            }
+        }
+
+        @include breakpoint-down(lg){
+            grid-template-columns:repeat(1, 1fr);
+            column-gap: 6px;
+            padding: 6px;
+        }
+    }
+
+    .main-cards{
+        margin-top: 50px;
+        margin-bottom: 30px;
+
+        &-title{
+            @include font-weight(semibold);
+            margin-bottom: 30px;
+            letter-spacing: $tracking-base;
+        }
+
+        .card-items{
+            display: grid;
+            grid-template-columns:repeat(5, 1fr);
+            gap: 24px;
+
+            @include breakpoint-down(lg){
+                gap: 16px;
+                grid-template-columns:repeat(4, 1fr);
+            }
+
+            @include breakpoint-down(md){
+                grid-template-columns:repeat(3, 1fr);
+            }
+
+            @include breakpoint-down(sm){
+                grid-template-columns:repeat(2, 1fr);
+            }
+
+            @include breakpoint-down(xs){
+                grid-template-columns:repeat(1, 1fr);
+            }
+        }
+
+        .card-item{
+            @include border($color-border, 1px, bottom);
+
+            &-img{
+                @include border-radius(6px);
+                overflow: hidden;
+            }
+
+            &-body{
+                padding: 16px 0;
+            }
+
+            &-genre{
+                color: map-get($colors, 'magnolia-light');
+                @include text-sm;
+            }
+
+            &-price{
+                margin-top: 6px;
+                @include flex-center-vert;
+                flex-wrap: wrap;
+
+                .discount-percent{
+                    @include text-sm;
+                    padding: 4px 6px;
+                    @include border-radius(6px);
+                    @include font-weight(semibold);
+                }
+
+                .old-price{
+                    margin: 0 12px;
+                }
+            }
+        }
+    }
+}

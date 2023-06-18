@@ -1,0 +1,231 @@
+@use "sass:math";
+ 
+/* ##### FONT SETUP ##### */
+ @mixin font($family: false, $size: false, $color: false, $weight: false, $lh: false){
+    @if $family{
+        font-family: $family;
+    }
+    @if $size{
+        font-size: calculateRem($size);
+    }
+    @if $size{
+        font-size: $size#{px};
+    }
+    @if $color{
+        color: $color;
+    }
+    @if $weight{
+        font-weight: $weight;
+    }
+    @if $lh{
+        line-height: $lh;
+    }
+}
+
+/* ##### FONT SIZE ##### */
+@mixin font-size($size, $line-height: normal, $letter-spacing: normal){
+    font-size: $size#{px};
+    font-size: calculateRem($size);
+
+    @if $line-height == normal{
+        line-height: normal; // Desktop browsers use a default value of ~1.2. (1.2 * font size)
+    } @else {
+        line-height: $line-height;
+    }
+
+    @if $letter-spacing == normal{
+        letter-spacing: normal;
+    } @else {
+        letter-spacing: $line-height;
+    }
+}
+
+/* ##### FONT WEIGHTS ##### */
+@mixin font-weight($weight){
+    $output: $weight;
+    @if map-has-key($font-weights, $weight){
+        $output: map-get($font-weights, $weight);
+    }
+    font-weight: $output;
+}
+
+/* ##### MEDIA QUERY ##### */
+@mixin breakpoint-up($size){
+    @media(min-width: map-get($breakpoints-up, $size)){
+        @content;
+    }
+}
+
+@mixin breakpoint-down($size){
+    @media(max-width: map-get($breakpoints-down, $size)){
+        @content;
+    }
+}
+
+@mixin bg-color($color){
+    $output: $color;
+    @if map-has-key($colors, $color){
+        $output: map-get($colors, $color);
+    }
+    background-color: $output;
+}
+
+/* ##### DEFAULT TRANSITION ##### */
+@mixin transition-default{
+    transition: $default-transition;
+}
+
+/* ##### SIZING ##### */
+@mixin box($width, $height: $width){
+    width: $width;
+    height: $height;
+}
+
+/* ##### BORDER & BORDER RADIUS ##### */
+@mixin border($border-color: black, $border-size: 1px, $border-position: all, $border-pattern: solid, $border-clear: none ) {
+    @if $border-position == all {
+      border: $border-size $border-pattern $border-color;
+    }
+    @else {
+      border-#{$border-position}: $border-size
+      $border-pattern $border-color;
+    }
+    @if $border-clear == none {
+      $border-position: all;
+    }
+    @else {
+      border-#{$border-clear}: none;
+    }
+}
+
+@mixin border-radius($top-left: null, $top-right:null, $bottom-right:null, $bottom-left:null){
+    border-radius: $top-left $top-right $bottom-right $bottom-left;  
+}
+
+/* ##### POSITIONING ##### */
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null, $z-index: initial){
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    z-index: $z-index;
+}
+
+@mixin pos-absolute($args...){
+    @include position(absolute, $args...);
+}
+
+@mixin pos-relative($args...){
+    @include position(relative, $args...);
+}
+
+@mixin pos-fixed($args...){
+    @include position(fixed, $args...);
+}
+
+/* ##### FLEXBOX TOOLKIT ##### */
+@mixin flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin inline-flex-center{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-center-column{
+    @include flex-center;
+    flex-direction: column;
+}
+
+@mixin flex-center-vert{
+    display: flex;
+    align-items: center;
+}
+
+@mixin flex-center-horiz{
+    display: flex;
+    justify-content: center;
+}
+
+/* ##### GRID TOOLKIT ##### */
+@mixin grid-center-vert{
+    display: grid;
+    align-items: center;
+}
+
+/* ##### VISIBILITY ##### */
+
+@mixin hidden{
+	display: none;
+	visibility: hidden;
+}
+
+@mixin visible($state: 'block') {
+	display: unquote($state);
+	visibility: visible;
+}
+
+/* ##### PADDING & MARGINS RESETS ##### */
+@mixin push--auto{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@mixin flush{margin: 0;}
+@mixin flush--top { margin-top: 0; }
+@mixin flush--bottom { margin-bottom: 0; }
+@mixin flush--left { margin-left: 0; }
+@mixin flush--right { margin-right: 0; }
+
+@mixin flush--ends { 
+    margin: { 
+        top: 0; 
+        bottom: 0; 
+    } 
+}
+
+@mixin flush--sides { 
+    margin: { 
+        left: 0; 
+        right: 0; 
+    } 
+}
+
+@mixin hard { padding: 0; }
+@mixin hard--top { padding-top: 0; }
+@mixin hard--bottom { padding-bottom: 0; }
+@mixin hard--left { padding-left: 0!important; }
+@mixin hard--right { padding-right: 0; }
+
+@mixin hard--ends { 
+    padding: { 
+        top: 0; 
+        bottom: 0; 
+    } 
+}
+
+@mixin hard--sides { 
+    padding: { 
+        left: 0; 
+        right: 0; 
+    } 
+}
+
+/* ##### OBJECT COVER ##### */
+@mixin object-cover{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+

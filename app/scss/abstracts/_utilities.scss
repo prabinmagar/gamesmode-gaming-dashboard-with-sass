@@ -1,0 +1,62 @@
+@use "sass:math";
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+// Output example classes: .text-white { color: #fff }
+@mixin generate-color-classes($prefix, $property){
+    @each $color-name, $color in $colors{
+        #{$prefix}-#{"" + $color-name}{
+            #{$property}: $color
+        }
+    }
+}
+
+// Output example classes: .font-regular { font-weight: 400 }
+@mixin generate-font-weight-classes($prefix, $property){
+    @each $weight-name, $weight in $font-weights{
+        #{$prefix}-#{$weight-name}{
+            #{$property}: $weight;
+        }
+    }
+}
+
+// Output example classes: .opacity-10 { opacity: 0.1 }
+@mixin generate-opacity-classes($prefix, $property, $step: 5){
+    @for $i from 0 through 20{
+        #{$prefix}-#{$i * $step}{
+            @if #{$i * $step } == "100" {
+                #{$property}: 1;
+            } @else {
+                #{$property}: unquote("0." + #{$i * $step});
+            }
+        }
+    }
+}
+
+@include generate-color-classes('.text', "color"); // text color generation
+@include generate-color-classes('.bg', 'background-color'); // background color generation
+@include generate-font-weight-classes('.font', 'font-weight'); // font weights generations
+@include generate-opacity-classes('.opacity', 'opacity'); // opacity generation
+
+.font{
+    &-poppins{ font-family: $font-family-poppins;}
+}
+
+.object-cover{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-wrap{ white-space: nowrap; }
+
+// animation and transition stopper 
+.resize-animation-stopper * {
+    animation: none !important;
+    transition: none !important;
+}
+

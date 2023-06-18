@@ -1,0 +1,27 @@
+/* GLOBAL COLOR PALETTE */
+/* ==== Generic colors ==== */
+$colors: (
+    primary                   : #141414,
+    secondary                 : #0061FD,
+    primary-light             : #2F2F2F,
+    black                     : #000000,
+    jet                       : #38383A,
+    magnolia                  : #EBEBF5,
+    magnolia-light            : #ebebf599,
+    white                     : #ffffff,
+    malachite                 : #32D74B,
+    pistachio                 : #B1DD8B,
+    dark-green                : #38571A
+);
+
+/* ==== Common colors ==== */ 
+$color-heading                : map-get($colors, white);
+$color-text                   : map-get($colors, white);
+$color-bg                     : map-get($colors, primary);
+$color-border                 : map-get($colors, jet);
+
+/* ==== Links colors ==== */
+$color-link-default           : map-get($colors, magnolia-light);
+$color-link-visited           : $color-link-default;
+$color-link-hover             : darken($color-link-default, 20%);
+$color-link-active            : darken($color-link-default, 20%);

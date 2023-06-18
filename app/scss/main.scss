@@ -1,0 +1,17 @@
+/* ##### ABSTRACTS ##### */
+@import 'abstracts/color_palette',
+        'abstracts/variables',
+        'abstracts/functions',
+        'abstracts/mixins',
+        'abstracts/config',
+        'abstracts/utilities';
+
+/* ##### BASE ##### */
+@import 'base/reset',
+        'base/typography';
+
+/* ##### COMPONENTS ##### */
+@import 'components/scrollbar';
+
+/* ##### PAGES ##### */ 
+@import "pages/index";

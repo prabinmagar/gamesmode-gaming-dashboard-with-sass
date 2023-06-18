@@ -1,0 +1,7 @@
+@use "sass:math";
+
+// converting from px to rem unit
+@function calculateRem($size){
+    $remSize: math.div($size, 16);
+    @return #{$remSize}rem;
+}

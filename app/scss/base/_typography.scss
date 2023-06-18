@@ -1,0 +1,60 @@
+/* #### TEXT #### */
+%text{
+    font-family: $font-family-poppins;
+}
+
+p{ @extend %text; }  
+
+// text size mappings for responsive font sizes according to device width
+$text-sm-sizes: ( null: "sm", lg: "xs");
+$text-base-sizes: (null: "md",lg: "sm",sm: "xs");
+$text-lg-sizes: (null: "lg",lg: "md",sm: "sm");
+$text-xl-sizes: (null: "xl",lg: "lg",sm: "md");
+
+// mixin for responsive paragraph font size 
+@mixin make-text-font-sizes($fs-map, $fs-breakpoints: $breakpoints-down){
+    @extend %text;
+    @each $fs-breakpoint, $fs-font-size in $fs-map{
+        @if $fs-breakpoint == null{
+            font-size: map-get($font-sizes, $fs-font-size);
+        } @else {
+            @include breakpoint-down($fs-breakpoint){
+                font-size: map-get($font-sizes, $fs-font-size);
+            }
+        }
+    }
+}
+
+.text-sm{ @include make-text-font-sizes($text-sm-sizes); }  
+.text-base{ @include make-text-font-sizes($text-base-sizes); }
+.text-lg{ @include make-text-font-sizes($text-lg-sizes); }
+.text-xl{ @include make-text-font-sizes($text-xl-sizes); }
+
+// responsive pargraph font size related mixins
+@mixin text-sm{ @include make-text-font-sizes($text-sm-sizes);}
+@mixin text-base{ @include make-text-font-sizes($text-base-sizes);}
+@mixin text-lg{ @include make-text-font-sizes($text-lg-sizes); }
+@mixin text-xl{ @include make-text-font-sizes($text-xl-sizes); }
+
+/* #### HEADINGS #### */
+h1, h2, h3, h4, h5, h6{
+    @include font($font-family-poppins, false, false, map-get($font-weights, 'semi-bold'));
+    @include flush--bottom; // margin-bottom: 0
+}
+
+h1{ font-size: $h1-font-size; }
+h2{ font-size: $h2-font-size; }
+h3{ font-size: $h3-font-size; }
+h4{ font-size: $h4-font-size; }
+h5{ font-size: $h5-font-size; }
+h6{ font-size: $h6-font-size; }
+
+// Adding some margin value at the top of h1 - h6 if there is any other HTML element above it
+* + h1,
+* + h2,
+* + h3,
+* + h4,
+* + h5,
+* + h6 {
+	margin-top: 12px;
+}
